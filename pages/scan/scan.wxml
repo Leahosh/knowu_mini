@@ -1,33 +1,35 @@
-<view class="radar">
-  <view class="x"></view>
-  <view class="ring ring-1"></view>
-  <view class="ring ring-2"></view>
-  <view class="ring ring-3"></view>
-  <view class="ring ring-4"></view>
-  <view class="ring ring-5"></view>
-  <view class="ring ring-6"></view>
-  <view class="ring ring-7"></view>
-  <view class="ring ring-8"></view>
-  <view class="ring ring-9"></view>
-  <view class="ring ring-10"></view>
-  <view class="target target-1"></view>
-  <view class="target target-2"></view>
-  <view class="target target-3"></view>
-</view>
-<block class="content">
-  <!-- <text style='width:100%;text-align:center;color:grey;'>搜索中...</text> -->
-  <i-cell-group class="list">
-      <i-cell title="设备A" label="描述文本A" value="点击连接">
-        <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
-        <i-switch slot="footer" checked ></i-switch>
-      </i-cell>
-      <i-cell title="设备B" label="描述文本B" value="点击连接">
-        <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
-        <i-switch slot="footer" checked ></i-switch>
-      </i-cell>
-      <i-cell title="设备C" label="描述文本C" value="点击连接">
-        <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
-        <i-switch slot="footer" checked ></i-switch>
-      </i-cell>
-  </i-cell-group>
+<block class="container">
+  <view class="radar">
+    <view class="x"></view>
+    <view class="ring ring-1"></view>
+    <view class="ring ring-2"></view>
+    <view class="ring ring-3"></view>
+    <view class="ring ring-4"></view>
+    <view class="ring ring-5"></view>
+    <view class="ring ring-6"></view>
+    <view class="ring ring-7"></view>
+    <view class="ring ring-8"></view>
+    <view class="ring ring-9"></view>
+    <view class="ring ring-10"></view>
+    <view class="target target-1"></view>
+    <view class="target target-2"></view>
+    <view class="target target-3"></view>
+  </view>
+  <block class="content">
+    <!-- <text style='width:100%;text-align:center;color:grey;'>搜索中...</text> -->
+    <i-cell-group class="list">
+        <i-cell title="设备A" label="描述文本A" value="点击连接">
+          <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
+          <i-switch slot="footer" checked ></i-switch>
+        </i-cell>
+        <i-cell title="设备B" label="描述文本B" value="点击连接">
+          <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
+          <i-switch slot="footer" checked ></i-switch>
+        </i-cell>
+        <i-cell title="设备C" label="描述文本C" value="点击连接">
+          <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
+          <i-switch slot="footer" checked ></i-switch>
+        </i-cell>
+    </i-cell-group>
+  </block>
 </block>
