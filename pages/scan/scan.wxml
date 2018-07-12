@@ -21,13 +21,13 @@
         <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
         <i-switch slot="footer" checked ></i-switch>
       </i-cell>
-      <i-cell title="设备B" label="描述文本B" value="点击连接">
+       <i-cell title="设备B" label="描述文本B" value="点击连接">
         <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
         <i-switch slot="footer" checked ></i-switch>
       </i-cell>
       <i-cell title="设备C" label="描述文本C" value="点击连接">
         <image class='icon' slot="icon" src='/assets/image/ble.png'></image>
         <i-switch slot="footer" checked ></i-switch>
-      </i-cell>
+      </i-cell> 
   </i-cell-group>
 </block>

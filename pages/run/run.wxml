@@ -1,0 +1,46 @@
+<view class="container timer {{isRuning ? 'timer--runing': ''}}">
+	<view class="timer_main">
+		 <view class="timer_time-wrap">
+		 		<view class="timer_progress_mask"></view>
+		 		<view class="timer_progress timer_left">
+		 			<view class="timer_circle timer_circle--left" style="transform: rotate({{leftDeg}}deg);"></view>
+		 		</view>
+		 		<view class="timer_progress timer_right">
+		 			<view class="timer_circle timer_circle--right" style="transform: rotate({{rightDeg}}deg);"></view>
+		 		</view>
+			 	<text wx:if="{{!completed}}" class="timer_time">{{remainTimeText}}</text>
+			 	<text 
+			 		wx:if="{{isRuning}}" 
+			 		animation="{{nameAnimation}}" 
+			 		class="timer_taskName">{{taskName}}{{completed ? '已完成！' : '中'}}</text>
+		 		<image 
+		 			wx:if="{{completed}}" 
+		 			class="timer_done" 
+		 			src="../../image/complete.png"></image>
+		 </view>
+	</view>
+	<block>
+  <!--按钮  -->
+     <view class="timer_footer">
+      <view 
+        bindtap="startTimer" 
+        data-type="work" 
+        class="timer_ctrl {{isRuning && timerType == 'rest' ? 'hide' : ''}}" >{{isRuning ? '完成': '开始'}}</view>
+    </view> 
+    <!--进度条  -->
+    <view class="section panel">
+      <text class="section_title">力度</text>
+    </view>
+    <view class="section_body">
+      <slider 
+        bindchange="changeWorkTime" 
+        show-value="true" 
+        min="1"
+        max="5"
+        value="{{workTime}}"
+        left-icon="cancel" 
+        right-icon="success_no_circle"/>
+    </view>
+  </block>
+</view>
+
