@@ -162,3 +162,11 @@
 .content{
   margin-top: 10px;
 }
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content:  center;
+  margin-top: auto;
+  margin-right: auto;
+}

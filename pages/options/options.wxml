@@ -1,4 +1,3 @@
-
-<view class="container" >
+﻿<view class="container" >
 <block class="head"><image class="add" src="/assets/image/logo.png"></image></block>
 </view>
