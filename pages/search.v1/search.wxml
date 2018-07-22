@@ -1,0 +1,45 @@
+<!--pages/search.v1/search.wxml-->
+<view class="container">
+<!--上部  -->
+<view class="display">
+<!--header  -->
+<view class="header"></view>
+<!--圈圈部分  -->
+<view class="circle-time"></view>
+</view>
+<!--下部  -->
+<view class="controller">
+<!--力度  -->
+<view>
+    <view class="section panel">
+      <text class="section_title">力度</text>
+    </view>
+    <view class="section_body">
+      <slider 
+        bindchange="changeWorkTime" 
+        show-value="true" 
+        min="1"
+        max="5"
+        value="{{workTime}}"
+        left-icon="cancel" 
+        right-icon="success_no_circle"/>
+    </view>
+</view>
+<!--模式  -->
+<view>
+    <view class="section panel">
+      <text class="section_title">模式</text>
+    </view>
+    <view class="section_body">
+      <slider 
+        bindchange="changeWorkTime" 
+        show-value="true" 
+        min="1"
+        max="5"
+        value="{{workTime}}"
+        left-icon="cancel" 
+        right-icon="success_no_circle"/>
+    </view>
+</view>
+</view>
+</view>

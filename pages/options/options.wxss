@@ -1,12 +1,17 @@
 .container{
-  height: 100px;
+  height: 25%;
   margin: 10px;
   border: 1px solid grey;
   border-radius: 6px;
   box-shadow: 2px 2px 1px grey;
-}
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}    
 .head{
+  align-self: flex-start;
   height: 24px;
+  width:100%;
   text-align: right;
 }
 .add{

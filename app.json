@@ -1,9 +1,11 @@
 {
   "pages": [
+    "pages/search.v1/search",
     "pages/index/index",
-    "pages/scan/scan",    
     "pages/options/options",
-    "pages/logs/logs"
+    "pages/scan/scan",
+    "pages/logs/logs",
+    "pages/search.v1/search"
   ],
   "tabBar": {
     "borderStyle": "white",

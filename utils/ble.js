@@ -1,0 +1,136 @@
+const utils = require("./util.js")
+const knowuConfig = {
+  uuid: "0000FFF0-0000-1000-8000-00805F9B34FB",
+  characteristic: "00001092-0000-1000-8000-00805f9b34fb"
+}
+const protocol = {
+  start:0x0a,
+  end:0x0b,
+  control:{
+    READ: 0x01,
+    WRITE: 0x02,
+    READ_RESPONSE: 0x03,
+    WRITE_RESPONSE: 0x123
+  },
+  types:{
+    SWITCH: 0xc0,
+    MODE: 0xc1,
+    INTENSITY: 0xc2,
+    CHECK: 0xc3,
+    LINK: 0xc4
+  },
+  data:{
+    ENABLE: 0x01,
+    DISABLE: 0x00,
+    MODE: 0x0,
+    CONNECT_OFF: 0x01,
+    CONNECT_WAITTING: 0x02,
+    CONNECT_ON: 0x03,
+    SUCCESS: 0x01,
+    FAILED: 0x00
+  }
+}
+const bleState = {
+  open: false
+}
+function send(deviceId) {
+  let buffer = new Uint8Array([0X0A, 0X07, 0X02, 0X02, 0XC0, 0X01, 0X0B])
+  wx.writeBLECharacteristicValue({
+    // 这里的 deviceId 需要在上面的 getBluetoothDevices 或 onBluetoothDeviceFound 接口中获取
+    deviceId: deviceId,
+    // 这里的 serviceId 需要在上面的 getBLEDeviceServices 接口中获取
+    serviceId: knowuConfig.uuid,
+    // 这里的 characteristicId 需要在上面的 getBLEDeviceCharacteristics 接口中获取
+    characteristicId: knowuConfig.characteristic,
+    // 这里的value是ArrayBuffer类型
+    value: buffer.buffer,
+    success: function (res) {
+      console.log('writeBLECharacteristicValue success', res.errMsg)
+    }
+  })
+}
+function open(){
+  wx.openBluetoothAdapter({
+    success: (res) => {
+      bleState.open = true
+      this.discover()
+    },
+    fail: (res) => {
+      bleState.open = false
+      utils.showMsg("ble.蓝牙适配启动失败", res.errMsg)
+    },
+    complete: (res) => { }
+  })
+}
+module.exports = {
+  init: function(){
+    wx.onBLEConnectionStateChange(function(res){
+      console.log("connect state change:")
+      console.log(res)
+    })
+    wx.onBluetoothAdapterStateChange(this._onStateChange)    
+    open()
+  },
+  
+  discover(){
+    wx.startBluetoothDevicesDiscovery({
+      services: [knowuConfig.uuid],
+      allowDuplicatesKey: false,
+      complete (res) {
+        // {errCode: 0, errMsg: "startBluetoothDevicesDiscovery:ok", isDiscovering: true}
+        if (res.isDiscovering){
+          console.log("discover success")
+          console.log(res)
+          wx.onBluetoothDeviceFound(function(res){
+            console.log("foundDevice")
+            const devices = res.devices
+            wx.stopBluetoothDevicesDiscovery({})
+            wx.createBLEConnection({
+              // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接 
+              deviceId: devices[0].deviceId,
+              success: function (res) {
+                // wx.closeBLEConnection(OBJECT)
+                console.log('connect success!')
+                console.log(res)
+                wx.notifyBLECharacteristicValueChange({
+                  state: true, // 启用 notify 功能
+                  // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接  
+                  deviceId: devices[0].deviceId,
+                  // 这里的 serviceId 需要在上面的 getBLEDeviceServices 接口中获取
+                  serviceId: knowuConfig.uuid,
+                  // 这里的 characteristicId 需要在上面的 getBLEDeviceCharacteristics 接口中获取
+                  characteristicId: knowuConfig.characteristic,
+                  success: function (res) {
+                    console.log('notifyBLECharacteristicValueChange success', res.errMsg)
+                  }
+                })
+                send(devices[0].deviceId)
+              }
+            })
+          })
+        }
+      }
+    })
+  },
+  close(){
+    wx.closeBluetoothAdapter({
+      success: (res) => {
+        console.log("ble.蓝牙适配器断开成功:%s", res.errMsg)
+      },
+      fail: (res) => {
+        console.log("ble.蓝牙适配器断开失败:%s", res.errMsg)
+      },
+      complete: (res) => { }
+    })
+  },
+  // 蓝牙状态改变
+  _onStateChange(res){
+    console.log("ble.onBluetoothAdapterStateChange:")
+    console.log(res)
+    //{available: false, discovering: false}
+    if (res.available) {
+      open()
+    }
+  },
+  send
+}

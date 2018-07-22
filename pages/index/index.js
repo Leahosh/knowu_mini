@@ -14,6 +14,7 @@ Page({
         url: '/pages/options/options'
       })
     },3000)
+    console.log(app)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
