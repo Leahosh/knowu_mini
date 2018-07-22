@@ -1,45 +1,54 @@
 <!--pages/search.v1/search.wxml-->
-<view class="container">
+<block class="container">
 <!--上部  -->
 <view class="display">
-<!--header  -->
-<view class="header"></view>
-<!--圈圈部分  -->
-<view class="circle-time"></view>
+  <!--header  -->
+  <view class="header">
+    <image class="header-icon" src='/assets/image/search_person.png'></image>
+    <block>
+     <image class="header-icon" src='/assets/image/search_battery.png'></image>
+     <image class="header-icon" src='/assets/image/search_help.png'></image>
+    </block>
+  </view>
+  <!--圈圈部分  -->
+  <view class="circle-time"></view>
 </view>
 <!--下部  -->
-<view class="controller">
+<block class="controller">
 <!--力度  -->
-<view>
+<block>
     <view class="section panel">
       <text class="section_title">力度</text>
     </view>
     <view class="section_body">
       <slider 
         bindchange="changeWorkTime" 
-        show-value="true" 
         min="1"
         max="5"
         value="{{workTime}}"
         left-icon="cancel" 
         right-icon="success_no_circle"/>
     </view>
-</view>
+</block>
 <!--模式  -->
-<view>
+<block>
     <view class="section panel">
       <text class="section_title">模式</text>
     </view>
-    <view class="section_body">
-      <slider 
-        bindchange="changeWorkTime" 
-        show-value="true" 
-        min="1"
-        max="5"
-        value="{{workTime}}"
-        left-icon="cancel" 
-        right-icon="success_no_circle"/>
+    <view class="section_mode">
+      <view class="item">
+        <image class='item-img' src='/assets/image/search_mode11.png'></image>
+      </view>
+       <view class="item">
+        <image class='item-img' src='/assets/image/search_mode20.png'></image>
+      </view>
+       <view class="item">
+        <image class='item-img' src='/assets/image/search_mode30.png'></image>
+      </view>
+      <view class="item">
+        <image class='item-img' src='/assets/image/search_mode40.png'></image>
+      </view>
     </view>
-</view>
-</view>
-</view>
+</block>
+</block>
+</block>

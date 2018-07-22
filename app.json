@@ -4,8 +4,7 @@
     "pages/index/index",
     "pages/options/options",
     "pages/scan/scan",
-    "pages/logs/logs",
-    "pages/search.v1/search"
+    "pages/logs/logs"
   ],
   "tabBar": {
     "borderStyle": "white",
