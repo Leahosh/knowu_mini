@@ -23,9 +23,9 @@
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "WeChat"
   },
   "networkTimeout": {
     "request": 10000,

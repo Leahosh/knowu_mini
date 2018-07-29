@@ -123,22 +123,12 @@ function discover(){
   })
 }
 module.exports = {
+  bleState,
   init: function(){
     wx.onBLEConnectionStateChange(function(res){
       console.log("connect state change:")
       console.log(res)
-      // wx.getBLEDeviceCharacteristics({
-      //   deviceId: res.deviceId,
-      //   serviceId: knowuConfig.uuid,
-      //   success: function (res) {
-      //    console.log('BLEDeviceCharacteristics:')
-      //    console.log(res)   
-      //   },
-      //   complete:function(res){
-      //     console.log('BLEDeviceCharacteristics:')
-      //     console.log(res)          
-      //   }
-      // })
+      
     })
     wx.onBluetoothAdapterStateChange(this._onStateChange)    
     open()

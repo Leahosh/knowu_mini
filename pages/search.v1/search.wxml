@@ -1,54 +1,54 @@
-<!--pages/search.v1/search.wxml-->
-<block class="container">
-<!--上部  -->
-<view class="display">
-  <!--header  -->
-  <view class="header">
-    <image class="header-icon" src='/assets/image/search_person.png'></image>
-    <block>
-     <image class="header-icon" src='/assets/image/search_battery.png'></image>
-     <image class="header-icon" src='/assets/image/search_help.png'></image>
-    </block>
+<!-- pages/search.v1/search.wxml -->
+<view class="container">
+  <!-- 上部 -->
+  <view class="display">
+    <!-- header -->
+    <view class="header">
+      <image class="header-icon-person" src='/assets/image/search_person.png'></image>
+      <view class="header-right">
+        <image class="header-icon-battery" src='/assets/image/search_battery.png'></image>
+        <image class="header-icon-help" src='/assets/image/search_help.png'></image>
+      </view>
+    </view>
+    <!-- 圈圈部分 -->
+    <view class="circle-time">
+      <image class="search-face" src="/assets/image/smail.png" />
+      <text class="search-desc">正在连接...</text>
+      <image class="search-device" src="/assets/image/search_device.svg" />
+    </view>
   </view>
-  <!--圈圈部分  -->
-  <view class="circle-time"></view>
-</view>
-<!--下部  -->
-<block class="controller">
-<!--力度  -->
-<block>
+  <!-- 下部 -->
+  <view class="controller">
+    <!-- 力度 -->
     <view class="section panel">
-      <text class="section_title">力度</text>
+      <view class="section-left"></view>
+      <text class="section-title">力度</text>
     </view>
     <view class="section_body">
-      <slider 
-        bindchange="changeWorkTime" 
-        min="1"
-        max="5"
-        value="{{workTime}}"
-        left-icon="cancel" 
-        right-icon="success_no_circle"/>
+      <slider class="slider" bindchanging="changeIntensity" min="1" max="5" value="{{workTime}}" left-icon="cancel" activeColor="#F3B291" block-size="22" right-icon="success_no_circle" />
     </view>
-</block>
-<!--模式  -->
-<block>
+    <!-- 模式 -->
     <view class="section panel">
-      <text class="section_title">模式</text>
+      <view class="section-left"></view>
+      <text class="section-title">模式</text>
     </view>
     <view class="section_mode">
-      <view class="item">
-        <image class='item-img' src='/assets/image/search_mode11.png'></image>
+      <view class="item" bind:tap="setMode" data-mode="1">
+        <image class='item-img' src='{{state.mode==1?imgs.mode1_on:imgs.mode1_off}}'></image>
+        <text class="item-img-desc">斗姨妈</text>
       </view>
-       <view class="item">
-        <image class='item-img' src='/assets/image/search_mode20.png'></image>
+      <view class="item" bind:tap="setMode" data-mode="2">
+        <image class='item-img' src='{{state.mode==2?imgs.mode2_on:imgs.mode2_off}}'></image>
+        <text class="item-img-desc">减肉肉</text>
       </view>
-       <view class="item">
-        <image class='item-img' src='/assets/image/search_mode30.png'></image>
+      <view class="item" bind:tap="setMode" data-mode="3">
+        <image class='item-img' src='{{state.mode==3?imgs.mode3_on:imgs.mode3_off}}'></image>
+        <text class="item-img-desc">揉一揉</text>
       </view>
-      <view class="item">
-        <image class='item-img' src='/assets/image/search_mode40.png'></image>
+      <view class="item" bind:tap="setMode" data-mode="4">
+        <image class='item-img' src='{{state.mode==4?imgs.mode4_on:imgs.mode4_off}}'></image>
+        <text class="item-img-desc">放轻松</text>
       </view>
     </view>
-</block>
-</block>
-</block>
+  </view>
+</view>
