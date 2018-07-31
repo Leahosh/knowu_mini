@@ -1,7 +1,6 @@
 // pages/search.v1/search.js
 const ble = require('../../utils/ble.js')
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -45,7 +44,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.onBLEConnectionStateChange(function(res){
+      console.log("connect state change:")
+      console.log(res)
+    })
   },
 
   /**

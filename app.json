@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/search.v1/search",
     "pages/index/index",
+    "pages/search.v1/search",
     "pages/options/options",
     "pages/scan/scan",
     "pages/logs/logs"

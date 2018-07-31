@@ -128,7 +128,7 @@ module.exports = {
     wx.onBLEConnectionStateChange(function(res){
       console.log("connect state change:")
       console.log(res)
-      
+      // todo
     })
     wx.onBluetoothAdapterStateChange(this._onStateChange)    
     open()
