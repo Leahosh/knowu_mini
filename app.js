@@ -1,8 +1,7 @@
-const ble = require('./utils/ble.js')
+
 //app.js
 App({
   onLaunch: function () {
-    ble.init()
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

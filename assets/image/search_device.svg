@@ -53,7 +53,7 @@
         fill: #dcdcdc;
       }
       .cls-4 {
-        animation: dingding 1s linear infinite;
+        animation: dingding 0.5s linear infinite;
       }
       @keyframes dingding{
         0%{fill: #dcdcdc;}

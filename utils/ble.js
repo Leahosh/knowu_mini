@@ -18,12 +18,14 @@ const protocol = {
     MODE: 0xc1,
     INTENSITY: 0xc2,
     CHECK: 0xc3,
-    LINK: 0xc4
+    LINK: 0xc4,
+    BATTERY: 0xC5
   },
   data:{
     ENABLE: 0x01,
     DISABLE: 0x00,
-    MODE: 0x0,
+    MODE: [0x01,0x02,0x03,0x04],
+    INTENSITY:[0x01,0x02,0x03,0x04,0x05],
     CONNECT_OFF: 0x01,
     CONNECT_WAITTING: 0x02,
     CONNECT_ON: 0x03,
@@ -35,8 +37,10 @@ const bleState = {
   open: false,
   findDevice: false
 }
-function send(deviceId) {
-  let buffer = new Uint8Array([0X0A, 0X07, 0X02, 0X02, 0XC0, 0X01, 0X0B])
+function send(deviceId,type,value,callback=()=>{}) {
+  // 帧头.长度.帧位.控制位.类型.数据,结束码
+  let buffer = new Uint8Array([0X0A, 0X07, 0X02, 0X02, type, value, 0X0B])
+  console.log(buffer)
   wx.writeBLECharacteristicValue({
     // 这里的 deviceId 需要在上面的 getBluetoothDevices 或 onBluetoothDeviceFound 接口中获取
     deviceId: deviceId,
@@ -46,9 +50,7 @@ function send(deviceId) {
     characteristicId: knowuConfig.characteristic,
     // 这里的value是ArrayBuffer类型
     value: buffer.buffer,
-    complete: function (res) {
-      console.log('write result:', res.errMsg)
-    }
+    complete: callback
   })
 }
 function open(){
@@ -88,20 +90,6 @@ function discover(){
             deviceId: devices[0].deviceId,
             success: function (res) {
               // wx.closeBLEConnection(OBJECT)
-              console.log('connect success!')
-              console.log(res)
-              wx.getBLEDeviceCharacteristics({
-                deviceId: devices[0].deviceId,
-                serviceId: knowuConfig.seriveId,
-                success: function (res) {
-                  console.log('BLEDeviceCharacteristics:')
-                  console.log(res)
-                },
-                complete: function (res) {
-                  console.log('BLEDeviceCharacteristics:')
-                  console.log(res)
-                }
-              })
               wx.notifyBLECharacteristicValueChange({
                 state: true, // 启用 notify 功能
                 // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接  
@@ -114,7 +102,6 @@ function discover(){
                   console.log('notifyBLECharacteristicValueChange success', res.errMsg)
                 }
               })
-              send(devices[0].deviceId)
             }
           })
         })
@@ -125,11 +112,6 @@ function discover(){
 module.exports = {
   bleState,
   init: function(){
-    wx.onBLEConnectionStateChange(function(res){
-      console.log("connect state change:")
-      console.log(res)
-      // todo
-    })
     wx.onBluetoothAdapterStateChange(this._onStateChange)    
     open()
   },
@@ -153,5 +135,6 @@ module.exports = {
     if (res.available) {
     }
   },
-  send
+  send,
+  protocol
 }

@@ -17,11 +17,14 @@ Page({
     },
     state: {
       mode: 1,
+      intensity:0,
+      deviceId:'',
+      isLink: false,
     }
   },
   // 设置模式
   setMode(event) {
-    if (!ble.bleState.findDevice) {
+    if (!this.data.state.isLink) {
       wx.showToast({
         icon: 'none',
         title: '尚未找到设备！',
@@ -32,22 +35,42 @@ Page({
     // todo 设置模式
     const state = this.data.state
     state.mode = event.currentTarget.dataset.mode
+    this.data.state.isLink && ble.send(this.data.state.deviceId,ble.protocol.types.MODE,ble.protocol.data.MODE[state.mode])
     this.setData({
       state
     })
   },
   changeIntensity(event) {
     // todo 设置强度
-    console.log(event.detail.value)
+    this.data.state.intensity = Math.floor(event.detail.value/100)
+    this.data.state.isLink && ble.send(this.data.state.deviceId,ble.protocol.types.INTENSITY,ble.protocol.data.INTENSITY[this.data.state.intensity])
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const that = this
     wx.onBLEConnectionStateChange(function(res){
-      console.log("connect state change:")
-      console.log(res)
+      const state = that.data.state
+      state.isLink = res.connected
+      that.setData({
+        state
+      })
+      console.log("state::",state)
+      if(res.connected){
+        state.deviceId = res.deviceId;
+        ble.send(state.deviceId,ble.protocol.types.SWITCH,ble.protocol.data.ENABLE)
+      }else{
+        // todo 连接断开
+        ble.discover()
+        wx.showToast({
+          icon: 'none',
+          title: '设备意外断开！',
+          duration: 2000
+        })
+      }
     })
+    ble.init()
   },
 
   /**
