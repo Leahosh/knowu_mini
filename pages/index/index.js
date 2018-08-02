@@ -10,10 +10,11 @@ Page({
   },
   onLoad: function () {
     setTimeout(()=>{
-      wx.switchTab({
-        url: '/pages/options/options'
+      wx.navigateTo({
+        url: '/pages/search.v1/search'
       })
     },3000)
+    console.log(app)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

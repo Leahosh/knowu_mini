@@ -1,3 +1,4 @@
+
 //app.js
 App({
   onLaunch: function () {
@@ -36,17 +37,7 @@ App({
   onError: function(err){
     // todo 
   },
-  // path	String	不存在页面的路径
-  // query	Object	打开不存在页面的 query
-  // isEntryPage	Boolean	是否本次启动的首个页面（例如从分享等入口进来，首个页面是开发者配置的分享页面）
-  onPageNotFound: function (res){
-    console.log('page not Found')
-    console.log(res)
-    // todo 
-    // wx.redirectTo({
-    //   url: 'pages/...'
-    // }) // 如果是 tabbar 页面，请使用 wx.switchTab
-  },
+  onPageNotFound: function (res){},
   onHide: function(){
     // todo 
   },
@@ -54,6 +45,7 @@ App({
     // todo
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    // ble
   }
 })

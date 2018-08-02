@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/scan/scan",    
+    "pages/search.v1/search",
     "pages/options/options",
+    "pages/scan/scan",
     "pages/logs/logs"
   ],
   "tabBar": {
@@ -22,9 +23,9 @@
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "WeChat"
   },
   "networkTimeout": {
     "request": 10000,

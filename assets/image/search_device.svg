@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="386" height="386.188" viewBox="0 0 386 386.188">
+  <g id="拟物按钮" class="cls-1">
+    <g id="组_1" data-name="组 1">
+      <path id="椭圆_1" data-name="椭圆 1" class="cls-2" d="M376.876,253.9c106.583,0,192.986,86.456,192.986,193.1s-86.4,193.1-192.986,193.1S183.889,553.648,183.889,447,270.292,253.9,376.876,253.9Z" transform="translate(-183.875 -253.906)"/>
+      <circle id="椭圆_1_拷贝" data-name="椭圆 1 拷贝" class="cls-3" cx="192.39" cy="193.704" r="174.234"/>
+      <g id="组_10" data-name="组 10">
+        <path id="圆角矩形_2" data-name="圆角矩形 2" class="cls-4" d="M374.221,319.273h1.68a4,4,0,0,1,4,4V435.13a4,4,0,0,1-4,4h-1.68a4,4,0,0,1-4-4V323.273A4,4,0,0,1,374.221,319.273Z" transform="translate(-183.875 -253.906)"/>
+      </g>
+      <path id="椭圆_2" data-name="椭圆 2" class="cls-5" d="M374.456,504.507a22.4,22.4,0,1,1-22.384,22.4A22.391,22.391,0,0,1,374.456,504.507Z" transform="translate(-183.875 -253.906)"/>
+      <path id="形状_6" data-name="形状 6" class="cls-6" d="M391.588,515.549s10.658,22.814-13.965,31.428" transform="translate(-183.875 -253.906)"/>
+    </g>
+  </g>
+  <defs>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="2.333" in="SourceAlpha"/>
+      <feFlood result="flood" flood-color="#fc9e8d" flood-opacity="0.35"/>
+      <feComposite result="composite-2" operator="out" in2="blur"/>
+      <feComposite result="composite" operator="in" in2="SourceAlpha"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-2" x="351" y="504.5" width="48" height="48.5" filterUnits="userSpaceOnUse">
+      <feOffset result="offset" dy="1" in="SourceAlpha"/>
+      <feGaussianBlur result="blur" stdDeviation="1"/>
+      <feFlood result="flood" flood-color="#040000" flood-opacity="0.22"/>
+      <feComposite result="composite" operator="in" in2="blur"/>
+      <feBlend result="blend" in="SourceGraphic"/>
+    </filter>
+  </defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-2, .cls-4, .cls-5, .cls-6 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3, .cls-6 {
+        fill: none;
+        stroke-linecap: round;
+      }
+
+      .cls-3 {
+        stroke: #fc9e8d;
+        stroke-width: 10px;
+      }
+
+      .cls-5 {
+        fill: #dcdcdc;
+      }
+      .cls-4 {
+        animation: dingding 0.5s linear infinite;
+      }
+      @keyframes dingding{
+        0%{fill: #dcdcdc;}
+        100%{fill:#40E63C;}
+      }
+      .cls-5 {
+        filter: url(#filter-2);
+      }
+
+      .cls-6 {
+        stroke: #fff;
+        stroke-width: 0.73px;
+        opacity: 0.73;
+      }
+    </style>
+</svg>
