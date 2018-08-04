@@ -1,6 +1,5 @@
 {
 	"description": "项目配置文件。",
-	"qcloudRoot": "./server",
 	"packOptions": {
 		"ignore": []
 	},
@@ -12,9 +11,9 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.4",
-	"appid": "wx26e18c12a1ebab67",
-	"projectname": "xzzs",
+	"libVersion": "2.2.1",
+	"appid": "wx9b5089f132204479",
+	"projectname": "knowu",
 	"isGameTourist": false,
 	"condition": {
 		"search": {

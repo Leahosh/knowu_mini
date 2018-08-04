@@ -1,5 +1,7 @@
 // pages/search.v1/search.js
 const ble = require('../../utils/ble.js')
+const util = require('../../utils/util.js')
+const clock = require('./clock.js')
 Page({
   /**
    * 页面的初始数据
@@ -17,8 +19,8 @@ Page({
     },
     state: {
       mode: 1,
-      intensity:0,
-      deviceId:'',
+      intensity: 0,
+      deviceId: '',
       isLink: false,
     }
   },
@@ -32,35 +34,38 @@ Page({
       })
       return
     }
-    // todo 设置模式
     const state = this.data.state
     state.mode = event.currentTarget.dataset.mode
-    this.data.state.isLink && ble.send(this.data.state.deviceId,ble.protocol.types.MODE,ble.protocol.data.MODE[state.mode])
+    this.data.state.isLink && ble.send(this.data.state.deviceId, ble.protocol.types.MODE, ble.protocol.data.MODE[state.mode])
     this.setData({
       state
     })
   },
   changeIntensity(event) {
-    // todo 设置强度
-    this.data.state.intensity = Math.floor(event.detail.value/100)
-    this.data.state.isLink && ble.send(this.data.state.deviceId,ble.protocol.types.INTENSITY,ble.protocol.data.INTENSITY[this.data.state.intensity])
+    let value = Math.floor(event.detail.value / 100)
+    if (this.data.state.intensity === value)
+      return
+    this.data.state.intensity = value
+    if (this.data.state.isLink) {
+      ble.send(this.data.state.deviceId, ble.protocol.types.INTENSITY, ble.protocol.data.INTENSITY[this.data.state.intensity])
+    }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     const that = this
-    wx.onBLEConnectionStateChange(function(res){
+    wx.onBLEConnectionStateChange(function (res) {
       const state = that.data.state
       state.isLink = res.connected
       that.setData({
         state
       })
-      console.log("state::",state)
-      if(res.connected){
+      console.log("state::", state)
+      if (res.connected) {
         state.deviceId = res.deviceId;
-        ble.send(state.deviceId,ble.protocol.types.SWITCH,ble.protocol.data.ENABLE)
-      }else{
+        ble.send(state.deviceId, ble.protocol.types.SWITCH, ble.protocol.data.ENABLE)
+      } else {
         // todo 连接断开
         ble.discover()
         wx.showToast({
@@ -77,14 +82,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    clock.init()
+    clock.run()
   },
 
   /**
