@@ -25,7 +25,7 @@ const protocol = {
     ENABLE: 0x01,
     DISABLE: 0x00,
     MODE: [0x01, 0x02, 0x03, 0x04],
-    INTENSITY: [0x01, 0x02, 0x03, 0x04, 0x05,0x06, 0x07, 0x08, 0x09, 0x0a,0x0b, 0x0c, 0x0d, 0x0e, 0x0f],
+    INTENSITY: [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f],
     CONNECT_OFF: 0x01,
     CONNECT_WAITTING: 0x02,
     CONNECT_ON: 0x03,
@@ -37,9 +37,9 @@ const bleState = {
   open: false,
   findDevice: false
 }
-function send(deviceId, type, value, callback = () => { }) {
+function send(deviceId, type, value, callback = () => { },mode = protocol.control.WRITE) {
   // 帧头.长度.帧位.控制位.类型.数据,结束码
-  let buffer = new Uint8Array([0X0A, 0X07, 0X02, 0X02, type, value, 0X0B])
+  let buffer = new Uint8Array([0X0A, 0X07, 0X02, mode, type, value, 0X0B])
   console.log(`send:[${buffer}] to:[${deviceId}]`)
   wx.writeBLECharacteristicValue({
     deviceId: deviceId,
@@ -64,7 +64,7 @@ function open() {
     complete: (res) => { }
   })
 }
-function connect(deviceId) {
+function connect(deviceId,battery=()=>{}) {
   wx.createBLEConnection({
     deviceId: deviceId,
     success: function (res) {
@@ -76,13 +76,28 @@ function connect(deviceId) {
         serviceId: knowuConfig.seriveId,
         characteristicId: knowuConfig.characteristic,
         success: function (res) {
-          console.log('设置特征值监听成功：', res.errMsg)
+          console.log('设置特征值监听：' + JSON.stringify(res.errMsg))
+          send(deviceId,protocol.types.BATTERY,protocol.data.NONE,()=>{},protocol.control.READ)
+          bleState.intervalId = setInterval(()=>{
+            send(deviceId,protocol.types.BATTERY,protocol.data.NONE,()=>{},protocol.control.READ)
+          },10000)
+          // 添加监听
+          wx.onBLECharacteristicValueChange(function (res) {
+            //0a 07 02 03 c5 46 0b
+            const data = new Uint8Array(res.value)
+            const mType = data[4]
+            const value = data[5]
+            console.log(`msgTye=${mType},battery=${value}`)
+            if(mType===0xc5 && battery){
+              battery(value)
+            }
+          })
         }
       })
     }
   })
 }
-function discover() {
+function discover(callback=()=>{}) {
   wx.startBluetoothDevicesDiscovery({
     services: [knowuConfig.uuid],
     allowDuplicatesKey: false,
@@ -101,7 +116,7 @@ function discover() {
           })
           const devices = res.devices
           // 连接设备
-          connect(devices[0].deviceId)
+          callback(devices[0].deviceId)
         })
       }
     }

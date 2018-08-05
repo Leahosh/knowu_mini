@@ -6,6 +6,7 @@
     <view class="header">
       <image class="header-icon-person" src='/assets/image/search_person.png'></image>
       <view class="header-right">
+        <text style="color:#FC9E8D;width:22px;margin-right:5px;height:22px;text-align:center;font-size:13px;">{{state.battery+'%'}}</text>
         <image class="header-icon-battery" src='/assets/image/search_battery.png'></image>
         <image class="header-icon-help" src='/assets/image/search_help.png'></image>
       </view>
@@ -29,7 +30,6 @@
         </block>
       </view>
       <view wx:else>
-        <!-- <image class="search-device" src="/assets/image/search_run.png" /> -->
         <canvas style='margin-left:auto;margin-right:auto;width:250px;height:250px;' bindtouchmove="touchClock" bindtouchend="setClock" canvas-id="clock" />
         <view class="bt_start" bind:tap="switchClock">{{state.running?'暂停':'开始'}}</view>
       </view>
@@ -45,10 +45,10 @@
     <view class="section_body">
       <view class="slider-icons">
         <view class='slider-icon slider-reduce' bind:tap="changeIntensity" data-add="false"></view>
+        <view class='slider-value'>{{'Lv.'+state.intensity}}</view>
         <view class='slider-icon slider-add' bind:tap="changeIntensity" data-add="true"></view>
       </view>
       <iprogress class="slider" percent="{{state.intensity/15 * 100}}" status="knowu" hide-info="true"></iprogress>
-      <!-- <slider class="slider" value="{{sliderValue}}" bindchanging="changeIntensity" min="0" max="1500" left-icon="cancel" activeColor="#F3B291" block-size="22" right-icon="success_no_circle" /> -->
     </view>
     <!-- 模式 -->
     <view class="section panel">

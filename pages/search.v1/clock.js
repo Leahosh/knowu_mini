@@ -78,9 +78,9 @@ module.exports = {
       ctx.translate(x, y)
       ctx.rotate(rad)
       if (i >= offset)
-        ctx.setFillStyle(style.primary)
-      else
         ctx.setFillStyle(style.grey)
+      else
+        ctx.setFillStyle(style.primary)
       if (i === 0) {
         ctx.fillRect(-0.5 * rwh, -0.5 * rhh, rwh, rhh)
       } else {

@@ -7,7 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    sliderValue: 0,
     imgs: {
       mode1_on: '/assets/image/search_mode11.png',
       mode1_off: '/assets/image/search_mode10.png',
@@ -24,7 +23,8 @@ Page({
       deviceId: '',
       isSearching: false,
       isLink: false,
-      running: false
+      running: false,
+      battery: 100
     }
   },
   // 设置模式
@@ -46,14 +46,13 @@ Page({
   },
   // 改变力度
   changeIntensity(event) {
-    console.log(event)
     const add = event.currentTarget.dataset.add === 'true'
     this.data.state.intensity = this.data.state.intensity+ (add?1:-1);
-    if(this.data.state.intensity<0) this.data.state.intensity = 0
+    if(this.data.state.intensity<1) this.data.state.intensity = 1
     if(this.data.state.intensity>15) this.data.state.intensity = 15
     this.setData({state:this.data.state})
     if (this.data.state.isLink) {
-      ble.send(this.data.state.deviceId, ble.protocol.types.INTENSITY, ble.protocol.data.INTENSITY[this.data.state.intensity])
+      ble.send(this.data.state.deviceId, ble.protocol.types.INTENSITY, ble.protocol.data.INTENSITY[this.data.state.intensity-1])
     }
   },
   // 开关蓝牙
@@ -68,9 +67,16 @@ Page({
   },
   // 设置开关
   switchSearching(event) {
+    const that = this
     const state = this.data.state
     if (event.currentTarget.dataset.mode === 'on') {
-      ble.discover()
+      ble.discover((deviceId)=>{
+        ble.connect(deviceId,battery=>{
+          console.log(`BATTERY:::${battery}`)
+          that.data.state.battery = battery
+          that.setData({state:that.data.state})
+        })
+      })
       state.isSearching = true
     } else {
       wx.stopBluetoothDevicesDiscovery({

@@ -96,6 +96,7 @@
 .slider-icons{
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 }
 .section_body{
@@ -119,13 +120,20 @@
 .slider-reduce{
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAj0lEQVRYR2NkGGDAOMD2M4w6YDQERkNgNARGQ2A0BOAh8H19v8JvZsZ6RgYGBVpWUP8ZGB6w/v3fyBlY+ABkD9wBnzZNfMDIwCBPS8thZv////8Bn3+B4sA5gIHhIZ9fPjikUaOAiamBkZHGUfCf4QHrv38NGFFAj6DHZsdoNhwNgdEQGA2B0RAYDYEBDwEAs0MjIctOEXUAAAAASUVORK5CYII=')
 }
+.slider-value{
+  width:60px;
+  background: #FC9E8D;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 13px;
+  color: white;
+  height:30px;
+} 
 .slider{
   width:100%;
   padding-bottom: 20px;
   border-bottom: 0.5px solid rgb(240, 238, 238);
-}
-.slider-reduce:hover{
-  src:
 }
 /* mode start */
 .section_mode{
