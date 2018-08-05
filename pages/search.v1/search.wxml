@@ -12,7 +12,7 @@
     </view>
     <!-- 圈圈部分 -->
     <view class="circle-time">
-      <block wx:if="{{!state.isLink}}">
+      <view wx:if="{{!state.isLink}}">
         <block wx:if="{{state.isSearching}}">
           <image class="search-face" src="/assets/image/smail.png" />
           <text class="search-desc">正在寻找设备...</text>
@@ -27,12 +27,12 @@
             搜索
           </view>
         </block>
-      </block>
-      <block wx:else>
+      </view>
+      <view wx:else>
         <!-- <image class="search-device" src="/assets/image/search_run.png" /> -->
         <canvas style='margin-left:auto;margin-right:auto;width:250px;height:250px;' bindtouchmove="touchClock" bindtouchend="setClock" canvas-id="clock" />
         <view class="bt_start" bind:tap="switchClock">{{state.running?'暂停':'开始'}}</view>
-      </block>
+      </view>
     </view>
   </view>
   <!-- 下部 -->
@@ -43,7 +43,12 @@
       <text class="section-title">力度</text>
     </view>
     <view class="section_body">
-      <slider class="slider" bindchanging="changeIntensity" min="0" max="1500" left-icon="cancel" activeColor="#F3B291" block-size="22" right-icon="success_no_circle" />
+      <view class="slider-icons">
+        <view class='slider-icon slider-reduce' bind:tap="changeIntensity" data-add="false"></view>
+        <view class='slider-icon slider-add' bind:tap="changeIntensity" data-add="true"></view>
+      </view>
+      <iprogress class="slider" percent="{{state.intensity/15 * 100}}" status="knowu" hide-info="true"></iprogress>
+      <!-- <slider class="slider" value="{{sliderValue}}" bindchanging="changeIntensity" min="0" max="1500" left-icon="cancel" activeColor="#F3B291" block-size="22" right-icon="success_no_circle" /> -->
     </view>
     <!-- 模式 -->
     <view class="section panel">
