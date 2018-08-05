@@ -43,7 +43,7 @@
       <text class="section-title">力度</text>
     </view>
     <view class="section_body">
-      <slider class="slider" bindchanging="changeIntensity" min="0" max="500" left-icon="cancel" activeColor="#F3B291" block-size="22" right-icon="success_no_circle" />
+      <slider class="slider" bindchanging="changeIntensity" min="0" max="1500" left-icon="cancel" activeColor="#F3B291" block-size="22" right-icon="success_no_circle" />
     </view>
     <!-- 模式 -->
     <view class="section panel">

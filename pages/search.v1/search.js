@@ -89,9 +89,6 @@ Page({
       state.isLink = res.connected
       state.isSearching = false
       state.running = false
-      that.setData({
-        state
-      })
       if (res.connected) {
         state.deviceId = res.deviceId
         setTimeout(()=>{
@@ -104,6 +101,9 @@ Page({
           duration: 2000
         })
       }
+      that.setData({
+        state
+      })
     })
     ble.init()
   },
