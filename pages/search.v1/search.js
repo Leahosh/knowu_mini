@@ -84,6 +84,7 @@ Page({
     const that = this
     // 连接状态改变
     wx.onBLEConnectionStateChange(function (res) {
+      console.log(`connect state change:${JSON.stringify(res)}`)
       const state = that.data.state
       state.isLink = res.connected
       state.isSearching = false
@@ -93,7 +94,9 @@ Page({
       })
       if (res.connected) {
         state.deviceId = res.deviceId
-        that.initBle()
+        setTimeout(()=>{
+          that.initBle()
+        },0)
       } else {
         wx.showToast({
           icon: 'none',

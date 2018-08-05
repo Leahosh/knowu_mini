@@ -42,16 +42,12 @@ function send(deviceId,type,value,callback=()=>{}) {
   let buffer = new Uint8Array([0X0A, 0X07, 0X02, 0X02, type, value, 0X0B])
   console.log(buffer)
   wx.writeBLECharacteristicValue({
-    // 这里的 deviceId 需要在上面的 getBluetoothDevices 或 onBluetoothDeviceFound 接口中获取
     deviceId: deviceId,
-    // 这里的 serviceId 需要在上面的 getBLEDeviceServices 接口中获取
     serviceId: knowuConfig.seriveId,
-    // 这里的 characteristicId 需要在上面的 getBLEDeviceCharacteristics 接口中获取
     characteristicId: knowuConfig.characteristic,
-    // 这里的value是ArrayBuffer类型
     value: buffer.buffer,
     complete: (res)=>{
-      console.log(`answer:${JSON.stringify(buffer)},response:${JSON.stringify(res)}`)
+      console.log(`send:[${buffer.toString()}],response:${JSON.stringify(res)}`)
       callback(res)
     }
   })
@@ -73,10 +69,8 @@ function discover(){
     services: [knowuConfig.uuid],
     allowDuplicatesKey: false,
     complete(res) {
-      // {errCode: 0, errMsg: "startBluetoothDevicesDiscovery:ok", isDiscovering: true}
       if (res.isDiscovering) {
-        console.log("discover success")
-        console.log(res)
+        console.log("begin discover!")
         wx.onBluetoothDeviceFound(function (res) {
           console.log("foundDevice")
           if(bleState.findDevice) return
@@ -121,10 +115,10 @@ module.exports = {
   close(){
     wx.closeBluetoothAdapter({
       success: (res) => {
-        console.log("ble.蓝牙适配器断开成功:%s", res.errMsg)
+        console.log("蓝牙适配器断开成功:%s", res.errMsg)
       },
       fail: (res) => {
-        console.log("ble.蓝牙适配器断开失败:%s", res.errMsg)
+        console.log("蓝牙适配器断开失败:%s", res.errMsg)
       },
       complete: (res) => { }
     })

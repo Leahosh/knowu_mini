@@ -1,0 +1,10 @@
+<!--index.wxml-->
+<view class="container">
+<block>
+   <image class="logo" src="{{logoUrl}}" mode="aspectFit"></image>
+</block>
+<block>
+  <text class="welcome" >{{name}}</text>
+</block>
+  <text class="desc" >{{desc}}</text>
+</view>
