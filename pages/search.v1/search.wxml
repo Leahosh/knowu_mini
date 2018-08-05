@@ -12,14 +12,26 @@
     </view>
     <!-- 圈圈部分 -->
     <view class="circle-time">
-      <block wx:if="{{false && !state.isLink}}">
-        <image class="search-face" src="/assets/image/smail.png" />
-        <text class="search-desc">正在寻找设备...</text>
-        <image class="search-device" src="/assets/image/search_device.svg" />
+      <block wx:if="{{!state.isLink}}">
+        <block wx:if="{{state.isSearching}}">
+          <image class="search-face" src="/assets/image/smail.png" />
+          <text class="search-desc">正在寻找设备...</text>
+          <image class="search-device" src="/assets/image/search_device.svg" />
+          <!-- <view class="bt_start" bind:tap="switchSearching" data-mode="off">
+            搜索中..
+          </view> -->
+        </block>
+        <block wx:else>
+          <image class="search-device" src="/assets/image/search_device_off.svg" />
+          <view class="bt_start" bind:tap="switchSearching" data-mode="on">
+            搜索
+          </view>
+        </block>
       </block>
       <block wx:else>
         <!-- <image class="search-device" src="/assets/image/search_run.png" /> -->
-        <canvas style='margin-left:auto;margin-right:auto;width:300px;height:300px;' canvas-id="clock"/>
+        <canvas style='margin-left:auto;margin-right:auto;width:250px;height:250px;' bindtouchmove="touchClock" bindtouchend="setClock" canvas-id="clock" />
+        <view class="bt_start" bind:tap="switchClock">{{state.running?'暂停':'开始'}}</view>
       </block>
     </view>
   </view>
@@ -41,19 +53,27 @@
     <view class="section_mode">
       <view class="item" bind:tap="setMode" data-mode="0">
         <image class='item-img' src='{{state.mode==0?imgs.mode1_on:imgs.mode1_off}}'></image>
-        <text class="item-img-desc">斗姨妈</text>
+        <text class="{{state.mode==0?'item-img-desc-on item-img-desc':'item-img-desc-off item-img-desc'}}">
+          斗姨妈
+        </text>
       </view>
       <view class="item" bind:tap="setMode" data-mode="1">
         <image class='item-img' src='{{state.mode==1?imgs.mode2_on:imgs.mode2_off}}'></image>
-        <text class="item-img-desc">减肉肉</text>
+        <text class="{{state.mode==1?'item-img-desc-on item-img-desc':'item-img-desc-off item-img-desc'}}">
+          减肉肉
+        </text>
       </view>
       <view class="item" bind:tap="setMode" data-mode="2">
         <image class='item-img' src='{{state.mode==2?imgs.mode3_on:imgs.mode3_off}}'></image>
-        <text class="item-img-desc">揉一揉</text>
+        <text class="{{state.mode==2?'item-img-desc-on item-img-desc':'item-img-desc-off item-img-desc'}}">
+          揉一揉
+        </text>
       </view>
       <view class="item" bind:tap="setMode" data-mode="3">
         <image class='item-img' src='{{state.mode==3?imgs.mode4_on:imgs.mode4_off}}'></image>
-        <text class="item-img-desc">放轻松</text>
+        <text class="{{state.mode==3?'item-img-desc-on item-img-desc':'item-img-desc-off item-img-desc'}}">
+          放轻松
+        </text>
       </view>
     </view>
   </view>

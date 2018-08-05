@@ -44,8 +44,45 @@ const debounce = function (fn, delay, immediate) {
 
   }
 }
+
+const angle = (start, end) => {
+  //double start.x, double start.y, double end.x, double end.y
+  const  epsilon = 1.0e-6;
+  const  nyPI = Math.acos(-1.0);
+  let dist, dot, degree, angle;
+
+  // normalize
+  dist = Math.sqrt(start.x * start.x + start.y * start.y);
+  start.x /= dist;
+  start.y /= dist;
+  dist = Math.sqrt(end.x * end.x + end.y * end.y);
+  end.x /= dist;
+  end.y /= dist;
+  // dot product
+  dot = start.x * end.x + start.y * end.y;
+  if (Math.abs(dot - 1.0) <= epsilon)
+    angle = 0.0;
+  else if (Math.abs(dot + 1.0) <= epsilon)
+    angle = nyPI;
+  else {
+    let cross;
+
+    angle = Math.acos(dot);
+    //cross product
+    cross = start.x * end.y - end.x * start.y;
+    // vector p2 is clockwise from vector p1
+    // with respect to the origin (0.0)
+    if (cross < 0) {
+      angle = 2 * nyPI - angle;
+    }
+  }
+  degree = angle * 180.0 / nyPI;
+  return degree;
+}
+
 module.exports = {
   formatTime: formatTime,
   showMsg,
-  debounce
+  debounce,
+  angle
 }

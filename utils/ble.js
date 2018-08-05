@@ -50,18 +50,20 @@ function send(deviceId,type,value,callback=()=>{}) {
     characteristicId: knowuConfig.characteristic,
     // 这里的value是ArrayBuffer类型
     value: buffer.buffer,
-    complete: callback
+    complete: (res)=>{
+      console.log(`answer:${JSON.stringify(buffer)},response:${JSON.stringify(res)}`)
+      callback(res)
+    }
   })
 }
 function open(){
   wx.openBluetoothAdapter({
     success: (res) => {
       bleState.open = true
-      discover()
     },
     fail: (res) => {
       bleState.open = false
-      utils.showMsg("ble.蓝牙适配启动失败", res.errMsg)
+      utils.showMsg("蓝牙适配打开失败！", res.errMsg)
     },
     complete: (res) => {}
   })
