@@ -149,7 +149,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    clock.init((running) => {
+    clock.init(running => {
       console.log("running state:", running)
       const sh = running ? ble.protocol.data.ENABLE : ble.protocol.data.DISABLE
       ble.send(this.data.state.deviceId, ble.protocol.types.SWITCH, sh)

@@ -53,11 +53,11 @@
         fill: #dcdcdc;
       }
       .cls-4 {
-        animation: dingding 0.5s linear infinite;
+        animation: dingding 1s linear infinite;
       }
       @keyframes dingding{
         0%{fill: #dcdcdc;}
-        100%{fill:#40E63C;}
+        100%{fill:#fc9e8d;}
       }
       .cls-5 {
         filter: url(#filter-2);

@@ -15,8 +15,8 @@ const state = {
   running : false
 }
 module.exports = {
-  init(callback) {
-    offset = 120
+  init(callback=()=>{}) {
+    offset = 120*30
     ctx = wx.createCanvasContext('clock')
     height = 250 || ctx._context.canvas.height
     width = 250 || ctx._context.canvas.width
@@ -29,7 +29,7 @@ module.exports = {
   },
   // 设置offset
   setOffset(scale){
-    offset = Math.round(scale * dimension.scale) % dimension.scale
+    offset = Math.round(scale * dimension.scale) % dimension.scale * 30
     this.draw()
   },
   // 设置运行状态
@@ -39,16 +39,15 @@ module.exports = {
   // 定时任务
   clock(callback){
     setInterval(()=>{
-      if(!state.running || offset === 0) return
+      if(!state.running) return
       if(offset===0){
         state.running = false
-        offset = 120
         callback(state.running)
       }else{
         offset = offset - 1
       }
       this.draw()
-    },500,500)
+    },500)
   },
   // 画内框
   drawInnerCircle() {
@@ -70,6 +69,7 @@ module.exports = {
     ctx.lineJoin = "round"
     ctx.lineWidth = 2
     for (let i = 0; i < dimension.scale; i++) {
+      const rOffset = Math.round(offset/30);
       let rad = 2 * Math.PI / dimension.scale * i
       let x = dimension.outerR * Math.cos(rad)
       let y = dimension.outerR * Math.sin(rad)
@@ -77,7 +77,7 @@ module.exports = {
       ctx.beginPath()
       ctx.translate(x, y)
       ctx.rotate(rad)
-      if (i >= offset)
+      if (i >= rOffset)
         ctx.setFillStyle(style.grey)
       else
         ctx.setFillStyle(style.primary)
@@ -86,7 +86,7 @@ module.exports = {
       } else {
         ctx.fillRect(-0.5 * rw, -0.5 * rh, rw, rh)
       }
-      if (i === offset) {
+      if (i === rOffset) {
         ctx.drawImage('/assets/image/pick.png', -10, -5 + dimension.outerR - dimension.innerR, 20, 20)
       }
       ctx.rotate(-rad)
