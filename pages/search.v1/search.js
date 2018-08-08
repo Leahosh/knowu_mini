@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    searchText: '',
     imgs: {
       mode1_on: '/assets/image/search_mode11.png',
       mode1_off: '/assets/image/search_mode10.png',
@@ -55,7 +56,7 @@ Page({
       ble.send(this.data.state.deviceId, ble.protocol.types.INTENSITY, ble.protocol.data.INTENSITY[this.data.state.intensity-1])
     }
   },
-  // 开关蓝牙
+  // 开关
   switchClock() {
     const state = this.data.state
     state.running = !state.running
@@ -65,13 +66,20 @@ Page({
     console.log(`开关：${state.running}`)
     ble.send(state.deviceId, ble.protocol.types.SWITCH, sh)
   },
-  // 设置开关
+  // 设置搜索
   switchSearching(event) {
     const that = this
     const state = this.data.state
+    that.setData({searchText: '正在寻找设备...'})
     if (event.currentTarget.dataset.mode === 'on') {
       ble.discover((deviceId)=>{
-        ble.connect(deviceId,battery=>{
+        that.setData({searchText: '发现设备,正在连接...'})
+        ble.connect(deviceId,(state,msg)=>{
+          // 连接状态回调
+          // todo 使用 state
+          that.setData({searchText: msg})
+        },battery=>{
+          // 电源剩余回调
           console.log(`BATTERY:::${battery}`)
           that.data.state.battery = battery
           that.setData({state:that.data.state})

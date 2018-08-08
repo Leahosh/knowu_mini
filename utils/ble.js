@@ -59,16 +59,27 @@ function open() {
     },
     fail: (res) => {
       bleState.open = false
-      utils.showMsg("蓝牙适配打开失败！", res.errMsg)
+      console.log(`蓝牙适配打开失败:${JSON.stringify(res.errMsg)}`)
+      utils.showMsg("提示", "请先打开手机蓝牙！")
     },
     complete: (res) => { }
   })
 }
-function connect(deviceId,battery=()=>{}) {
+function connect(deviceId,stateCallback=()=>{},battery=()=>{}) {
   wx.createBLEConnection({
     deviceId: deviceId,
     success: function (res) {
       console.log(`连接设备成功：${JSON.stringify(res)}`)
+      // todo 准备删除的代码
+      wx.getBLEDeviceServices({
+        deviceId: deviceId,
+        fail: function (res) {
+          wx.showModal({
+            title:'服务发现错误',
+            content:JSON.stringify(res)
+          })
+        }
+      })
       wx.notifyBLECharacteristicValueChange({
         // 启用 notify 功能
         state: true,
@@ -81,7 +92,7 @@ function connect(deviceId,battery=()=>{}) {
           bleState.intervalId = setInterval(()=>{
             send(deviceId,protocol.types.BATTERY,protocol.data.NONE,()=>{},protocol.control.READ)
           },10000)
-          // 添加监听
+          // 添加电源监听
           wx.onBLECharacteristicValueChange(function (res) {
             //0a 07 02 03 c5 46 0b
             const data = new Uint8Array(res.value)
@@ -94,6 +105,10 @@ function connect(deviceId,battery=()=>{}) {
           })
         }
       })
+    },
+    complete:(res)=>{
+      console.log(`连接结果回调：${JSON.stringify(res)}`)
+      stateCallback && stateCallback(...(res.available?[1,'连接成功！']:[-1,'连接失败！']))
     }
   })
 }
@@ -143,10 +158,11 @@ module.exports = {
   },
   // 蓝牙状态改变
   _onStateChange(res) {
-    console.log("ble.onBluetoothAdapterStateChange:")
-    console.log(res)
-    //{available: false, discovering: false}
+    console.log(`蓝牙状态改变${JSON.stringify(res)}`)
     if (res.available) {
+      // todo 
+      
+      // open()
     }
   },
   send,

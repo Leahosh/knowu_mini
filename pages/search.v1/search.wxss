@@ -69,6 +69,7 @@
 }
 .search-device{
   margin:auto;
+  transition: height 1s linear;
   width:60vw;
   height:60vw;
   display: block;
