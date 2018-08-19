@@ -1,10 +1,3 @@
-<!--index.wxml-->
-<view class="container">
-<block>
-   <image class="logo" src="{{logoUrl}}" mode="aspectFit"></image>
-</block>
-<block>
-  <text class="welcome" >{{name}}</text>
-</block>
-  <text class="desc" >{{desc}}</text>
+<view style="position: fixed;top:0;left:0;right:0;bottom:0;">
+  <image style="width:100%;height:100%;" src="/assets/image/launch_pic.gif" mode="scaleToFill"></image>
 </view>

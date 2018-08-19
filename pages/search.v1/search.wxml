@@ -6,20 +6,33 @@
     <view class="header">
       <image class="header-icon-person" src='/assets/image/search_person.png'></image>
       <view class="header-right">
+        <text style="display:inline-block;color:#FC9E8D;width:22px;margin-right:5px;height:22px;text-align:center;font-size:13px;">{{state.battery+'%'}}</text>
         <image class="header-icon-battery" src='/assets/image/search_battery.png'></image>
-        <image class="header-icon-help" src='/assets/image/search_help.png'></image>
+        <!-- <image class="header-icon-help" src='/assets/image/search_help.png'></image> -->
       </view>
     </view>
     <!-- 圈圈部分 -->
     <view class="circle-time">
-      <block wx:if="{{!state.isLink}}">
-        <image class="search-face" src="/assets/image/smail.png" />
-        <text class="search-desc">正在寻找设备...</text>
-        <image class="search-device" src="/assets/image/search_device.svg" />
-      </block>
-      <block wx:else>
-        <image class="search-device" src="/assets/image/search_run.png" />
-      </block>
+      <view wx:if="{{!state.isLink}}">
+        <block wx:if="{{state.isSearching}}">
+          <image class="search-face" src="/assets/image/smail.png" />
+          <text class="search-desc">{{searchText}}</text>
+          <image class="search-device" src="/assets/image/search_device.svg" />
+          <!-- <view class="bt_start" bind:tap="switchSearching" data-mode="off">
+            搜索中..
+          </view> -->
+        </block>
+        <block wx:else>
+          <image class="search-device" src="/assets/image/search_device_off.svg" />
+          <view class="bt_start" bind:tap="switchSearching" data-mode="on">
+            搜索
+          </view>
+        </block>
+      </view>
+      <view wx:else>
+        <canvas style='margin-left:auto;margin-right:auto;width:250px;height:250px;' bindtouchmove="touchClock" bindtouchend="setClock" canvas-id="clock" />
+        <view class="bt_start" bind:tap="switchClock">{{state.running?'暂停':'开始'}}</view>
+      </view>
     </view>
   </view>
   <!-- 下部 -->
@@ -30,7 +43,12 @@
       <text class="section-title">力度</text>
     </view>
     <view class="section_body">
-      <slider class="slider" bindchanging="changeIntensity" min="0" max="500" left-icon="cancel" activeColor="#F3B291" block-size="22" right-icon="success_no_circle" />
+      <view class="slider-icons">
+        <view class='slider-icon slider-reduce' bind:tap="changeIntensity" data-add="false"></view>
+        <view class='slider-value'>{{'Lv.'+state.intensity}}</view>
+        <view class='slider-icon slider-add' bind:tap="changeIntensity" data-add="true"></view>
+      </view>
+      <iprogress class="slider" percent="{{state.intensity/15 * 100}}" status="knowu" hide-info="true"></iprogress>
     </view>
     <!-- 模式 -->
     <view class="section panel">
@@ -40,19 +58,27 @@
     <view class="section_mode">
       <view class="item" bind:tap="setMode" data-mode="0">
         <image class='item-img' src='{{state.mode==0?imgs.mode1_on:imgs.mode1_off}}'></image>
-        <text class="item-img-desc">斗姨妈</text>
+        <text class="{{state.mode==0?'item-img-desc-on item-img-desc':'item-img-desc-off item-img-desc'}}">
+          斗姨妈
+        </text>
       </view>
       <view class="item" bind:tap="setMode" data-mode="1">
         <image class='item-img' src='{{state.mode==1?imgs.mode2_on:imgs.mode2_off}}'></image>
-        <text class="item-img-desc">减肉肉</text>
+        <text class="{{state.mode==1?'item-img-desc-on item-img-desc':'item-img-desc-off item-img-desc'}}">
+          减肉肉
+        </text>
       </view>
       <view class="item" bind:tap="setMode" data-mode="2">
         <image class='item-img' src='{{state.mode==2?imgs.mode3_on:imgs.mode3_off}}'></image>
-        <text class="item-img-desc">揉一揉</text>
+        <text class="{{state.mode==2?'item-img-desc-on item-img-desc':'item-img-desc-off item-img-desc'}}">
+          揉一揉
+        </text>
       </view>
       <view class="item" bind:tap="setMode" data-mode="3">
         <image class='item-img' src='{{state.mode==3?imgs.mode4_on:imgs.mode4_off}}'></image>
-        <text class="item-img-desc">放轻松</text>
+        <text class="{{state.mode==3?'item-img-desc-on item-img-desc':'item-img-desc-off item-img-desc'}}">
+          放轻松
+        </text>
       </view>
     </view>
   </view>

@@ -1,26 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/search.v1/search",
-    "pages/options/options",
-    "pages/scan/scan",
-    "pages/logs/logs"
+    "pages/search.v1/search"
   ],
-  "tabBar": {
-    "borderStyle": "white",
-    "list": [
-      {
-        "pagePath": "pages/options/options",
-        "selectedIconPath": "assets/image/run_1.png",
-        "iconPath": "assets/image/run_0.png"
-      },
-      {
-        "pagePath": "pages/scan/scan",
-        "selectedIconPath": "assets/image/scan_1.png",
-        "iconPath": "assets/image/scan_0.png"
-      }
-    ]
-  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
@@ -31,5 +13,5 @@
     "request": 10000,
     "downloadFile": 10000
   },
-  "debug": true
+  "debug": false
 }
